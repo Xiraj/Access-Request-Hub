@@ -129,6 +129,11 @@ app.Use(async (context, next) =>
     await next();
 });
 
+// Serve wwwroot/index.html at / and its same-origin assets.
+// Keep these after the logging/security middleware and before API endpoints.
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 // Keep the step 8 health endpoint; counts now increase when test requests are created.
 app.MapGet("/api/health", async (HubDatabase db, CancellationToken cancellationToken) =>
 {
@@ -157,14 +162,6 @@ app.MapGet("/api/health", async (HubDatabase db, CancellationToken cancellationT
         migration = reader.IsDBNull(4) ? null : reader.GetString(4)
     });
 });
-
-app.MapGet("/", () => Results.Ok(new
-{
-    application = "Access Request Hub",
-    stage = "9 - Backend API",
-    health = "/api/health",
-    message = "Backend siap. Gunakan X-User-Id untuk endpoint bisnis. Frontend dibuat pada langkah 10."
-}));
 
 app.MapGet("/api/bootstrap", async (HttpContext context, HubService hub, CancellationToken cancellationToken) =>
     Results.Ok(new { data = await hub.BootstrapAsync(Actor(context), cancellationToken) }));

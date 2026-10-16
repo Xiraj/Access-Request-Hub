@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AccessHub — Access Request Hub</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="AccessHub home"><span class="brand-mark">A</span>AccessHub<span class="brand-dot">.</span></a>
+    <div class="workspace-label">ACCESS MANAGEMENT</div>
+    <nav aria-label="Navigasi utama">
+      <button class="nav-item active" data-scope="mine"><span aria-hidden="true">▤</span> My requests</button>
+      <button class="nav-item" data-scope="inbox"><span aria-hidden="true">▣</span> Approval inbox</button>
+      <button class="nav-item" data-scope="all" id="audit-nav" hidden><span aria-hidden="true">◷</span> Audit overview</button>
+    </nav>
+    <div class="sidebar-note"><span class="live-dot"></span> Local assessment<div>Phase 1 · Policy v1<br>Simulated identity · No SSO</div></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <span class="breadcrumb">Workspace <span>/</span> Access requests</span>
+      <div class="identity"><label for="user-select">Demo user</label><select id="user-select" aria-label="Switch demo user" disabled><option>Memuat users…</option></select><div class="avatar" id="avatar" aria-hidden="true">A</div></div>
+    </header>
+    <main>
+      <div class="page-heading"><div><p class="eyebrow">ONE REQUEST. EVERY DECISION.</p><h1 id="page-title">My requests</h1><p id="page-subtitle" class="muted">Kelola permintaan akses dan ikuti setiap tahap approval.</p></div><button id="new-request" class="button primary" disabled><span aria-hidden="true">＋</span> New request</button></div>
+      <div id="flash" role="status" aria-live="polite" hidden></div>
+      <div class="summary" aria-label="Ringkasan daftar saat ini">
+        <div class="stat"><span class="stat-icon blue" aria-hidden="true">▤</span><div><span>Total requests</span><strong id="count-total">—</strong></div></div>
+        <div class="stat"><span class="stat-icon amber" aria-hidden="true">◷</span><div><span>Awaiting approval</span><strong id="count-pending">—</strong></div></div>
+        <div class="stat"><span class="stat-icon green" aria-hidden="true">✓</span><div><span>Approved</span><strong id="count-approved">—</strong></div></div>
+      </div>
+      <section class="list-card" aria-label="Daftar permintaan">
+        <div class="list-heading"><div><h2 id="list-title">Request activity</h2><p class="muted">Status terkini, approver yang ditugaskan, dan audit dalam satu tempat.</p></div><button class="button subtle" id="refresh">↻ Refresh</button></div>
+        <div id="list-state" class="empty-state" role="status">Memuat permintaan…</div>
+        <div id="table-wrap" class="table-wrap" hidden><table><thead><tr><th>Request / application</th><th>Requester</th><th>Access</th><th>Status</th><th>Created</th><th><span class="sr-only">Detail</span></th></tr></thead><tbody id="requests-body"></tbody></table></div>
+      </section>
+      <p class="page-note"><span aria-hidden="true">◇</span> Production atau akses Admin membutuhkan approval System Owner setelah Manager.</p>
+    </main>
+    <footer>ACCESS REQUEST HUB <span>Phase 1 · Local demonstration</span></footer>
+  </div>
+
+  <dialog id="create-dialog" aria-labelledby="create-title">
+    <form id="create-form">
+      <div class="dialog-heading"><div><p class="eyebrow">REQUEST ACCESS</p><h2 id="create-title">Akses yang tepat, proses yang jelas.</h2></div><button type="button" class="icon-button close-dialog" aria-label="Tutup form">×</button></div>
+      <p class="muted">Request dibuat atas nama <strong id="requester-label">Alice</strong>. Manager Anda akan meninjau lebih dahulu.</p>
+      <div id="create-error" class="inline-error" role="alert" hidden></div>
+      <label for="application">Application</label><select id="application" name="application_id" required></select>
+      <div class="form-grid"><div><label for="environment">Environment</label><select id="environment" name="environment"><option value="NonProduction">NonProduction</option><option value="Production">Production</option></select></div><div><label for="access-level">Access level</label><select id="access-level" name="access_level"><option>Read</option><option>Admin</option></select></div></div>
+      <div id="risk-preview" class="policy-box">Standard request · Manager approval.</div>
+      <label for="justification">Justification <span class="muted">(wajib)</span></label><textarea id="justification" name="justification" rows="4" maxlength="2000" required placeholder="Jelaskan kebutuhan bisnis dan alasan akses diperlukan."></textarea>
+      <p class="field-help">Maksimum 2.000 karakter. Semua keputusan akan tercatat di audit trail.</p>
+      <div class="dialog-actions"><button type="button" class="button secondary close-dialog">Cancel</button><button type="submit" class="button primary" id="submit-request">Submit request →</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title">
+    <div class="dialog-heading"><div><p class="eyebrow" id="detail-number">REQUEST DETAIL</p><h2 id="detail-title">Detail permintaan</h2></div><button class="icon-button close-dialog" aria-label="Tutup detail">×</button></div>
+    <div id="detail-state" role="status">Memuat detail…</div>
+    <div id="detail-content" hidden>
+      <div class="detail-status" id="detail-status"></div>
+      <div id="detail-error" class="inline-error" role="alert" hidden></div>
+      <dl id="detail-fields" class="detail-fields"></dl>
+      <div class="justification-box"><h3>Business justification</h3><p id="detail-justification"></p></div>
+      <section id="decision-panel" class="decision-panel" hidden><h3>Your decision</h3><p class="muted">Keputusan berlaku untuk versi yang sedang Anda lihat.</p><label for="reject-reason">Reject reason <span class="muted">(wajib jika reject)</span></label><textarea id="reject-reason" rows="2" maxlength="2000" placeholder="Jelaskan alasan penolakan."></textarea><div class="decision-buttons"><button class="button danger" id="reject-button">Reject request</button><button class="button primary" id="approve-button">Approve request ✓</button></div></section>
+      <section class="timeline-section"><h3>Audit timeline</h3><p class="muted">Riwayat append-only · waktu ditampilkan dalam zona lokal browser.</p><ol class="timeline" id="audit-timeline"></ol></section>
+    </div>
+    <div class="dialog-actions"><button class="button secondary" id="reload-detail">↻ Muat ulang detail</button><button class="button secondary close-dialog">Close</button></div>
+  </dialog>
+</body>
+</html>
