@@ -55,3 +55,8 @@ D:\coding\AGIT\Access Request Hub\src\AccessRequestHub\obj\Debug\net10.0\refint\
 D:\coding\AGIT\Access Request Hub\src\AccessRequestHub\obj\Debug\net10.0\AccessRequestHub.pdb
 D:\coding\AGIT\Access Request Hub\src\AccessRequestHub\obj\Debug\net10.0\AccessRequestHub.genruntimeconfig.cache
 D:\coding\AGIT\Access Request Hub\src\AccessRequestHub\obj\Debug\net10.0\ref\AccessRequestHub.dll
+D:\coding\AGIT\Access Request Hub\src\AccessRequestHub\bin\Debug\net10.0\AccessRequestHub.staticwebassets.runtime.json
+D:\coding\AGIT\Access Request Hub\src\AccessRequestHub\bin\Debug\net10.0\migrations\001_initial.sql
+D:\coding\AGIT\Access Request Hub\src\AccessRequestHub\obj\Debug\net10.0\compressed\d4nd2elrv8-{0}-5ipweew5fc-5ipweew5fc.gz
+D:\coding\AGIT\Access Request Hub\src\AccessRequestHub\obj\Debug\net10.0\compressed\m6htvkoxax-{0}-5ipweew5fc-5ipweew5fc.gz
+D:\coding\AGIT\Access Request Hub\src\AccessRequestHub\obj\Debug\net10.0\compressed\3kx362vl1d-{0}-5ipweew5fc-5ipweew5fc.gz

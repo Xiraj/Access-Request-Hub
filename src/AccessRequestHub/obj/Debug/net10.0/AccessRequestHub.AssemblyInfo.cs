@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AccessRequestHub")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+471c01d6bd3fbb97f052b4ad7a8306b63ad3b26d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0bd1987f71eab0d51d57ca2aba8642dced2ae3a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("AccessRequestHub")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AccessRequestHub")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
