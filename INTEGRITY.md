@@ -72,3 +72,4 @@ Gunakan daftar ini untuk mencatat review yang benar-benar telah dilakukan:
 Setelah review selesai, isi seluruh placeholder, sesuaikan checklist dengan
 bukti aktual, dan ubah status DRAFT menjadi Final jika deklarasinya benar.
 Hasil pengujian yang belum dijalankan tetap dicatat sebagai belum diverifikasi.
+    
