@@ -1,7 +1,7 @@
 # AI Usage Log
 
 Project: Access Request Hub — Phase 1  
-Periode catatan: sampai tahap frontend/langkah 10 dan pembaruan dokumentasi  
+Periode catatan: sampai tahap frontend/langkah 10, pembaruan dokumentasi, dan klarifikasi status script pengujian  
 Terakhir diperbarui: 16 Oktober 2026
 
 ## 1. Tools dan Batas Catatan
@@ -136,12 +136,13 @@ berdasarkan bukti aktual.
 | Pemeriksaan | Bukti/status yang tersedia |
 | --- | --- |
 | Syntax JavaScript frontend | Lulus pada environment pembuat paket langkah 10 |
-| scripts/Test-Step10.mjs | 10 lulus, 0 gagal pada Node.js 24.19.0 di environment pembuat paket; DOM/HTTP disimulasikan |
+| scripts/Test-Step10.mjs pada environment pembuat paket | 10 lulus, 0 gagal pada Node.js 24.19.0; DOM/HTTP disimulasikan |
+| scripts/Test-Step10.mjs pada komputer pengembang | Belum dijalankan menurut catatan yang diberikan; script sempat belum disalin ke repository |
 | Review Program.cs langkah 10 | Perubahan terhadap langkah 9 terbatas pada hosting static files dan penghapusan endpoint JSON root |
 | Pemeriksaan backend langkah 9 | Catatan paket mencakup review statis dan pemeriksaan SQL; tidak dihitung sebagai build atau .NET integration tests |
 | Build di komputer pengembang | Pernah gagal dengan MSB3027/MSB3021 karena AccessRequestHub PID 7184 mengunci executable; hasil build ulang belum dilaporkan |
 | Build/run .NET pada environment pembuat paket | Belum dijalankan karena SDK .NET tidak tersedia |
-| scripts/Test-Step09.ps1 | Disediakan dengan target 33 HTTP checks; hasil eksekusi aktual belum dicatat di sini |
+| scripts/Test-Step09.ps1 | Script pemeriksaan API yang disediakan pada langkah 9; target 33 HTTP checks; hasil eksekusi aktual belum dicatat di sini |
 | Browser dengan server ASP.NET Core nyata | Hasil walkthrough, layout, keyboard/dialog, dan Console/CSP belum dilaporkan di sini |
 | Review pribadi pengembang dan finalisasi integrity declaration | Perlu dicatat oleh pengembang berdasarkan review yang benar-benar dilakukan |
 
@@ -153,6 +154,24 @@ dan rendering justification sebagai literal text.
 Hasil simulasi tersebut tidak menggantikan pengujian backend/integration dan
 browser nyata. Klaim dari implementasi atau stack lain tidak dipakai sebagai
 bukti bahwa project ASP.NET Core ini telah lulus pengujian.
+
+### Status Test-Step10.mjs
+
+- Script disiapkan dengan bantuan ChatGPT dan disertakan dalam paket langkah 10.
+- Sepuluh pemeriksaan simulasi lulus di environment pembuat paket.
+- Pengembang melaporkan bahwa script sempat belum disalin ke repository.
+  Status penyalinan saat dokumen diperbarui belum dikonfirmasi.
+- Hasil pengujian pada komputer pengembang: belum dijalankan menurut catatan
+  yang diberikan.
+- Setelah script disalin dan dijalankan, tambahkan tanggal, commit yang diuji,
+  command, dan hasil aktual pada dokumen ini serta catatan validasi.
+
+Folder scripts yang direncanakan berisi dua file pengujian:
+
+| File | Ruang lingkup | Kebutuhan menjalankan |
+| --- | --- | --- |
+| scripts/Test-Step09.ps1 | HTTP/API backend; target 33 pemeriksaan | PowerShell dan aplikasi ASP.NET Core yang sedang berjalan |
+| scripts/Test-Step10.mjs | JavaScript frontend; 10 pemeriksaan DOM/HTTP simulasi | Node.js 20+; tidak memerlukan server untuk simulasi ini |
 
 ## 5. Sumber dan Provenance
 
@@ -174,7 +193,8 @@ Lengkapi berdasarkan keadaan repository dan output aktual:
 - Commit/revisi source yang diperiksa: [isi commit hash]
 - Hasil build ulang setelah proses aplikasi dihentikan: [isi hasil]
 - Hasil script API langkah 9: [isi hasil aktual atau belum dijalankan]
-- Hasil pemeriksaan frontend pada komputer pengembang: [isi hasil atau belum dijalankan]
+- Status penyalinan scripts/Test-Step10.mjs ke repository: [konfirmasi sudah disalin atau belum]
+- Hasil Test-Step10.mjs pada komputer pengembang: belum dijalankan menurut catatan saat ini; perbarui setelah eksekusi aktual.
 - Hasil walkthrough standard, Production, Admin, rejection, dan conflict: [isi hasil]
 - Saran AI yang akhirnya diubah atau ditolak saat review: [isi perubahan dan alasan, atau belum ada yang dicatat]
 - Keterbatasan/pekerjaan tertunda: [catat dan selaraskan dengan REVIEW.md]
