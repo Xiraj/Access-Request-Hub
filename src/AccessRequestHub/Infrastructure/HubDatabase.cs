@@ -115,4 +115,22 @@ public sealed class HubDatabase
         // Disposing an uncommitted transaction rolls back schema, seed and history.
         transaction.Commit();
     }
+
+    /// <summary>
+    /// Every write uses its own connection and an immediate SQLite transaction.
+    /// Callers attach this transaction to ALL commands inside the callback.
+    /// An exception disposes the transaction without committing, causing rollback.
+    /// </summary>
+    public async Task<T> InImmediateTransactionAsync<T>(
+        Func<SqliteConnection, SqliteTransaction, Task<T>> action,
+        CancellationToken cancellationToken = default)
+    {
+        await using var connection = await OpenConnectionAsync(cancellationToken);
+        using var transaction = connection.BeginTransaction(deferred: false);
+
+        var result = await action(connection, transaction);
+        cancellationToken.ThrowIfCancellationRequested();
+        transaction.Commit();
+        return result;
+    }
 }
