@@ -1,7 +1,7 @@
 # AI Usage Log
 
 Project: Access Request Hub — Phase 1  
-Periode catatan: sampai tahap frontend/langkah 10, pembaruan dokumentasi, dan klarifikasi status script pengujian  
+Periode catatan: sampai langkah 11, pemeriksaan terisolasi, dan pembaruan README/REVIEW/INTEGRITY  
 Terakhir diperbarui: 16 Oktober 2026
 
 ## 1. Tools dan Batas Catatan
@@ -12,7 +12,7 @@ pemeriksaan, review bantuan AI, dan dokumentasi.
 
 Bantuan mencakup bagian besar rancangan dan kode backend/frontend, bukan hanya
 perbaikan sintaks. Kode diberikan melalui paket langkah database, backend, dan
-frontend untuk dipasang pada repository pengembang.
+frontend serta pemeriksaan langkah 11 untuk dipasang pada repository pengembang.
 
 Catatan ini disusun dari percakapan dan paket yang sudah disiapkan. Keputusan
 di bawah menggambarkan arah implementasi yang dilanjutkan dalam pendampingan.
@@ -31,7 +31,7 @@ berdasarkan bukti aktual.
   scaffold, database, backend, frontend, pengujian, dan dokumentasi secara bertahap.
 - **Accepted/changed/rejected:** Changed — arah implementasi disesuaikan ke
   ASP.NET Core sesuai pilihan pengembang. SQLite dan frontend HTML/CSS/JavaScript
-  dipertahankan sebagai rancangan MVP yang dipandu sampai langkah 10.
+  dipertahankan sebagai rancangan MVP yang dipandu sampai langkah 11.
 - **Why:** Mengikuti stack yang dipilih dan menjaga setup lokal serta dependensi
   tetap sederhana untuk scope assessment.
 
@@ -78,21 +78,28 @@ berdasarkan bukti aktual.
 - **Why:** Frontend harus menunjukkan status yang dapat dipahami sekaligus
   mempertahankan idempotency dan penanganan stale data pada critical flow.
 
-### 5. Troubleshooting lokal dan perbaikan evidence engineering
+### 5. Pengujian langkah 11, troubleshooting, dan evidence engineering
 
-- **Ask:** Jelaskan error build, error Git pathspec docs, waktu push dokumen,
-  serta isi PLAN.md, AI_USAGE.md, dan INTEGRITY.md sesuai assessment.
-- **Suggestion:** Hentikan proses aplikasi yang mengunci executable sebelum
-  rebuild; buat dan isi folder docs sebelum staging; catat perubahan dokumen
-  secara bertahap. Lengkapi delapan bagian PLAN.md, lima interaksi penting dan
-  Three things AI got wrong pada AI_USAGE.md, serta deklarasi dan sumber bantuan
-  pada INTEGRITY.md. Gunakan rename sementara untuk perubahan casing nama file.
-- **Accepted/changed/rejected:** Changed — template AI_USAGE yang awalnya hanya
-  daftar bantuan diperluas menjadi log keputusan sesuai PDF. Draf PLAN.md dan
-  INTEGRITY.md sudah disediakan. Hasil eksekusi setiap command Git/build dan
-  finalisasi deklarasi tetap mengikuti keadaan aktual pengembang.
-- **Why:** Evidence perlu menjelaskan keputusan, kesalahan, koreksi, dan batas
-  verifikasi; keberadaan file saja belum membuktikan engineering ownership.
+- **Ask:** Lanjutkan pengujian langkah 11, bantu troubleshooting build/Git,
+  serta siapkan README.md, REVIEW.md, dan pembaruan INTEGRITY.md/AI_USAGE.md.
+- **Suggestion:** Tambahkan 23 service/database checks C# dan runner PowerShell
+  yang membangun project, memakai database temporary, menjalankan 33 API checks,
+  tujuh hosting/database smoke checks, serta frontend checks. Gunakan task
+  terpisah dan gerbang mulai bersama untuk concurrency tests. Lengkapi evidence
+  dan bedakan target pemeriksaan dari hasil aktual.
+- **Accepted/changed/rejected:** Changed — rancangan test C# diperkuat agar
+  kedua operasi tidak hanya dievaluasi berurutan melalui Task.WhenAll.
+  Paket langkah 11 serta dokumen disediakan. Output CLI mengonfirmasi project
+  test sudah terdaftar dalam solution. Template AI_USAGE diperbaiki menjadi
+  lima interaksi dan Three things AI got wrong; status deklarasi tetap DRAFT
+  sampai review pribadi dikonfirmasi. Hasil runner belum dilaporkan.
+- **Why:** Verifikasi perlu membuktikan race handling, rollback audit, dan
+  database reproducibility. Catatan harus menunjukkan keputusan, koreksi,
+  keterbatasan source review, dan evidence runtime yang benar-benar tersedia.
+
+  Bantuan troubleshooting juga mencakup executable terkunci, path docs belum
+  tersedia, rename casing INTEGRITY berdasarkan nama yang tercatat Git, dan
+  kegagalan DNS ketika push. Hasil akhir command mengikuti laporan aktual.
 
 ## 3. Three things AI got wrong
 
@@ -136,13 +143,17 @@ berdasarkan bukti aktual.
 | Pemeriksaan | Bukti/status yang tersedia |
 | --- | --- |
 | Syntax JavaScript frontend | Lulus pada environment pembuat paket langkah 10 |
-| scripts/Test-Step10.mjs pada environment pembuat paket | 10 lulus, 0 gagal pada Node.js 24.19.0; DOM/HTTP disimulasikan |
+| scripts/Test-Step10.mjs pada environment pembuat paket | 10 lulus, 0 gagal pada Node.js 24.19.0; dijalankan ulang saat paket langkah 11 disiapkan; DOM/HTTP disimulasikan |
 | scripts/Test-Step10.mjs pada komputer pengembang | Belum dijalankan menurut catatan yang diberikan; script sempat belum disalin ke repository |
 | Review Program.cs langkah 10 | Perubahan terhadap langkah 9 terbatas pada hosting static files dan penghapusan endpoint JSON root |
 | Pemeriksaan backend langkah 9 | Catatan paket mencakup review statis dan pemeriksaan SQL; tidak dihitung sebagai build atau .NET integration tests |
 | Build di komputer pengembang | Pernah gagal dengan MSB3027/MSB3021 karena AccessRequestHub PID 7184 mengunci executable; hasil build ulang belum dilaporkan |
 | Build/run .NET pada environment pembuat paket | Belum dijalankan karena SDK .NET tidak tersedia |
 | scripts/Test-Step09.ps1 | Script pemeriksaan API yang disediakan pada langkah 9; target 33 HTTP checks; hasil eksekusi aktual belum dicatat di sini |
+| Project test terdaftar dalam solution | Dikonfirmasi output CLI pengembang: solution already contains project tests/AccessRequestHub.Tests/AccessRequestHub.Tests.csproj |
+| tests/AccessRequestHub.Tests | Paket langkah 11 mendaftarkan 23 service/database checks; belum dieksekusi pada environment pembuat paket; hasil pengembang belum dilaporkan |
+| scripts/Test-Step11.ps1 | Runner tersedia; target tujuh hosting/database smoke checks dan koordinasi kelompok test; hasil eksekusi pengembang belum dilaporkan |
+| SQL/schema tambahan langkah 11 | Enam pemeriksaan lulus pada environment pembuat paket, termasuk rollback audit serta concurrent raw INSERT/conditional UPDATE |
 | Browser dengan server ASP.NET Core nyata | Hasil walkthrough, layout, keyboard/dialog, dan Console/CSP belum dilaporkan di sini |
 | Review pribadi pengembang dan finalisasi integrity declaration | Perlu dicatat oleh pengembang berdasarkan review yang benar-benar dilakukan |
 
@@ -155,9 +166,14 @@ Hasil simulasi tersebut tidak menggantikan pengujian backend/integration dan
 browser nyata. Klaim dari implementasi atau stack lain tidak dipakai sebagai
 bukti bahwa project ASP.NET Core ini telah lulus pengujian.
 
+Enam pemeriksaan SQL langkah 11 menggunakan schema dan query aplikasi melalui
+SQLite. Pemeriksaan tersebut tidak menjalankan service C# atau HTTP. Raw SQL
+unique-constraint failure tidak dinyatakan sebagai bukti idempotent replay API.
+
 ### Status Test-Step10.mjs
 
 - Script disiapkan dengan bantuan ChatGPT dan disertakan dalam paket langkah 10.
+- Paket langkah 11 menyertakan kembali script langkah 9/10 bersama runner baru.
 - Sepuluh pemeriksaan simulasi lulus di environment pembuat paket.
 - Pengembang melaporkan bahwa script sempat belum disalin ke repository.
   Status penyalinan saat dokumen diperbarui belum dikonfirmasi.
@@ -166,12 +182,23 @@ bukti bahwa project ASP.NET Core ini telah lulus pengujian.
 - Setelah script disalin dan dijalankan, tambahkan tanggal, commit yang diuji,
   command, dan hasil aktual pada dokumen ini serta catatan validasi.
 
-Folder scripts yang direncanakan berisi dua file pengujian:
+Folder scripts pada paket sampai langkah 11 berisi tiga script pengujian:
 
 | File | Ruang lingkup | Kebutuhan menjalankan |
 | --- | --- | --- |
 | scripts/Test-Step09.ps1 | HTTP/API backend; target 33 pemeriksaan | PowerShell dan aplikasi ASP.NET Core yang sedang berjalan |
 | scripts/Test-Step10.mjs | JavaScript frontend; 10 pemeriksaan DOM/HTTP simulasi | Node.js 20+; tidak memerlukan server untuk simulasi ini |
+| scripts/Test-Step11.ps1 | Build, C# checks, koordinasi API/frontend, dan tujuh smoke checks pada database temporary | .NET 10 SDK dan PowerShell; Node.js untuk frontend checks atau -SkipFrontend yang dicatat |
+
+### Status review dan dokumentasi
+
+- README.md disiapkan untuk setup, migration/seed, run, demo users/flow, API,
+  serta cara menjalankan dan mencatat pengujian sampai langkah 11.
+- REVIEW.md mencatat findings, severity, action, status, evidence, limitations,
+  dan deferred work. Review source menemukan fetch frontend belum memiliki
+  timeout aplikasi eksplisit; usulan deadline/AbortController belum diterapkan.
+- INTEGRITY.md diperbarui untuk cakupan langkah 11. Status DRAFT dan checklist
+  pribadi belum dianggap terkonfirmasi oleh bantuan AI.
 
 ## 5. Sumber dan Provenance
 
@@ -183,6 +210,8 @@ Folder scripts yang direncanakan berisi dua file pengujian:
   dihubungkan ke kontrak API paket langkah 9.
 - Rujukan troubleshooting: dokumentasi resmi Microsoft untuk static files
   ASP.NET Core, MSB3021/MSB3027, dan Stop-Process.
+- Rancangan concurrency tests juga merujuk dokumentasi Microsoft.Data.Sqlite
+  mengenai operasi async yang berjalan sinkron.
 - Source repository, snippet, template tambahan, serta bantuan manusia yang
   digunakan di luar percakapan ini perlu ditambahkan oleh pengembang bila ada.
 
@@ -193,11 +222,14 @@ Lengkapi berdasarkan keadaan repository dan output aktual:
 - Commit/revisi source yang diperiksa: [isi commit hash]
 - Hasil build ulang setelah proses aplikasi dihentikan: [isi hasil]
 - Hasil script API langkah 9: [isi hasil aktual atau belum dijalankan]
+- Hasil runner Test-Step11.ps1 dan opsi yang dipakai: [isi output/exit code atau belum dijalankan]
+- Hasil 23 service/database checks dan tujuh hosting checks: [isi hasil aktual]
 - Status penyalinan scripts/Test-Step10.mjs ke repository: [konfirmasi sudah disalin atau belum]
 - Hasil Test-Step10.mjs pada komputer pengembang: belum dijalankan menurut catatan saat ini; perbarui setelah eksekusi aktual.
 - Hasil walkthrough standard, Production, Admin, rejection, dan conflict: [isi hasil]
 - Saran AI yang akhirnya diubah atau ditolak saat review: [isi perubahan dan alasan, atau belum ada yang dicatat]
 - Keterbatasan/pekerjaan tertunda: [catat dan selaraskan dengan REVIEW.md]
+- Keputusan atas finding timeout fetch di REVIEW.md: [perbaiki dengan evidence / deferred dengan alasan]
 
 Perbarui log saat ada interaksi penting berikutnya. Status selesai dan tag
 phase-1-complete mengikuti implementasi, hasil pengujian, dan evidence aktual.
